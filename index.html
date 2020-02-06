@@ -4,60 +4,70 @@
 <head>
     <title>Tax calculator (Recruitment excercise)</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
-    <script src="app.js"></script>
+    <script src="app copy.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body ng-app="mainApp" ng-controller="rowController">
-    
+
     <div style="overflow-x:auto;">
         <div class="head">
             <h3>WARTOŚĆ</h3>
         </div>
         <table class="table">
-        <thead class="tableHeader">
-            <tr class="tableHeader" ng-init="addNewRow()">
-                <td>#</td>
-                <td ><button class="addNewRow"  ng-click="addNewRow()"  >+</button></td>
-                <td>Wartość netto</td>
-                <td>Stawka VAT</td>
-                <td>Wartość VAT</td>
-                <td>Wartość brutto</td>
-            </tr>
-        </thead>
-        <tbody class="tableNormal">
-            <tr ng-repeat="inputRow in inputsArray">
-                <td>{{$index+1}}.</td>
-                <td><button class="deleteRow" ng-click="deleteRow($index)">-</button></td>
-                <td>
-                    <input type="number" ng-model="taxFree"  ng-init="calculateForTaxFreeChange(taxFree, $index)"  
-                    ng-focus="taxFree=''" ng-blur="taxFree=checkInput(taxFree); calculateForTaxFreeChange(taxFree, $index); calculateTotalTaxFree(); calculateTotalTax(); calculateTotalValue()"  
-                    ng-change="calculateForTaxFreeChange(taxFree, $index); calculateTotalTaxFree(); calculateTotalTax(); calculateTotalValue()">
-                </td>  
-                <td>
-                    <select ng-model="vatRate"  ng-options="x for x in vat" ng-init="vatRate=vat[0]" ng-change="taxSelector(vatRate, $index); calculateTotalTax(); calculateTotalValue()"> </select>
-                </td>
-                <td >{{ inputRow.valueOfVat | number: 2 }}</td>
-                <td >{{ inputRow.valueWithVat | number: 2 }}</td>       
-            </tr>
-        </tbody>
-        <tfoot>
-            <tr class="tableHeader">
-                <td></td>
-                <td></td>
-                <td>{{ totalTaxFree | number: 2 }} PLN</td>
-                <td></td>
-                <td ng-init="totalTaxValue=0">{{ totalTaxValue | number: 2 }} PLN</td>
-                <td ng-init="totalValue=0">{{ totalValue | number: 2 }} PLN</td>
-            </tr>
-        </tfoot>
+            <thead class="tableHeader">
+                <tr class="tableHeader" ng-init="addNewRow()">
+                    <td>#</td>
+                    <td><button class="addNewRow" ng-click="addNewRow()">+</button></td>
+                    <td>Wartość netto</td>
+                    <td>Stawka VAT</td>
+                    <td>Wartość VAT</td>
+                    <td>Wartość brutto</td>
+                </tr>
+            </thead>
+            <tbody class="tableNormal">
+                <tr ng-repeat="inputRow in inputsArray">
+                    <td>{{$index+1}}.</td>
+                    <td><button class="deleteRow" ng-click="deleteRow($index)">-</button></td>
+                    <td>
+                        <input type="number" ng-model="inputRow.taxFree"
+                            ng-init="calculateForTaxFreeChange(inputRow.taxFree, $index)" ng-focus="inputRow.taxFree=''"
+                            ng-blur="inputRow.taxFree=checkInput(inputRow.taxFree); calculateForTaxFreeChange(inputRow.taxFree, $index); calculateTotalTaxFree(); calculateTotalTax(); calculateTotalValue()"
+                            ng-change="calculateForTaxFreeChange(inputRow.taxFree, $index); calculateTotalTaxFree(); calculateTotalTax(); calculateTotalValue()">
+                    </td>
+                    <td>
+                        <select ng-model="vatRate" ng-options="x for x in vat" ng-init="vatRate=vat[0]"
+                            ng-change="taxSelector(vatRate, $index); calculateTotalTax(); calculateTotalValue()"></select>
+                    </td>
+                    <td>
+                        <input type="number" ng-model="inputRow.valueOfVat" ng-focus="inputRow.valueOfVat=''"
+                            ng-blur="inputRow.valueOfVat=checkInput(inputRow.valueOfVat); calculateForValueOfVatChange(inputRow.valueOfVat, $index); calculateTotalTaxFree(); calculateTotalTax(); calculateTotalValue() "
+                            ng-init="calculateForValueOfVatChange(inputRow.valueOfVat, $index)"
+                            ng-change="calculateForValueOfVatChange(inputRow.valueOfVat, $index); calculateTotalTax(); calculateTotalValue(); calculateTotalTaxFree();">
+                    </td>
+                    <td>
+                        <input type="number" ng-model="inputRow.valueWithVat" ng-focus="inputRow.valueWithVat=''"
+                            ng-blur="inputRow.valueWithVat=checkInput(inputRow.valueWithVat); calculateForValueWithVatChange(inputRow.valueWithVat, $index); calculateTotalTaxFree(); calculateTotalTax(); calculateTotalValue() "
+                            ng-init="calculateForValueWithVatChange(inputRow.valueWithVat, $index)"
+                            ng-change="calculateForValueWithVatChange(inputRow.valueWithVat, $index); calculateTotalTax(); calculateTotalValue(); calculateTotalTaxFree();">
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr class="tableHeader">
+                    <td></td>
+                    <td></td>
+                    <td>{{ totalTaxFree | number: 2 }} PLN</td>
+                    <td></td>
+                    <td ng-init="totalTaxValue=0">{{ totalTaxValue | number: 2 }} PLN</td>
+                    <td ng-init="totalValue=0">{{ totalValue | number: 2 }} PLN</td>
+                </tr>
+            </tfoot>
 
         </table>
-        
+
     </div>
 </body>
 
 </html>
-
-
 

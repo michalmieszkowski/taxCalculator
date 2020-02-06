@@ -7,6 +7,7 @@ app.controller("rowController", function ($scope) {
     $scope.inputsArray = [];
     $scope.taxFree = 0;
     $scope.totalTaxFree = 0;
+    $scope.valueOfVat = 0;
 
     $scope.taxSelector = function (x, index) {
         if (x == $scope.vat[0]) {
@@ -18,7 +19,7 @@ app.controller("rowController", function ($scope) {
         }
         $scope.calculateForTaxChange($scope.vatRate, index);
     };
-    
+
     $scope.addNewRow = function () {
         $scope.vatRate = 0.23;
         $scope.taxFree = 0;
@@ -28,7 +29,7 @@ app.controller("rowController", function ($scope) {
             'valueOfVat': $scope.valueOfVat,
             'valueWithVat': $scope.valueWithVat,
         })
-          
+
     };
 
     $scope.calculateForTaxFreeChange = function (netto, index) {
@@ -40,12 +41,12 @@ app.controller("rowController", function ($scope) {
         $scope.inputsArray[index].valueWithVat = (netto * $scope.vatRate) + netto;
         netto = 0;
     };
-          
+
     $scope.calculateForTaxChange = function (vat, index) {
         $scope.inputsArray[index].valueOfVat = $scope.inputsArray[index].taxFree * vat;
         $scope.inputsArray[index].valueWithVat = ($scope.inputsArray[index].taxFree * vat) + $scope.inputsArray[index].taxFree;
-    }; 
-    
+    };
+
     $scope.deleteRow = function (index) {
         $scope.inputsArray.splice(index, 1)
         $scope.calculateTotalTaxFree();
@@ -56,7 +57,7 @@ app.controller("rowController", function ($scope) {
     $scope.checkInput = function (netto) {
         if (netto == '') {
             return 0;
-        } else {    
+        } else {
             return netto;
         }
     };
@@ -64,13 +65,13 @@ app.controller("rowController", function ($scope) {
     $scope.calculateTotalTaxFree = function () {
         $scope.totalTaxFree = 0;
         for (var i = 0; i < $scope.inputsArray.length; i++) {
-            $scope.totalTaxFree = $scope.totalTaxFree + $scope.inputsArray[i].taxFree;    
+            $scope.totalTaxFree = $scope.totalTaxFree + $scope.inputsArray[i].taxFree;
         }
         return $scope.totalTaxFree;
     }
 
     $scope.calculateTotalTax = function () {
-        $scope.totalTaxValue = 0;    
+        $scope.totalTaxValue = 0;
         for (var i = 0; i < $scope.inputsArray.length; i++) {
             $scope.totalTaxValue = $scope.totalTaxValue + $scope.inputsArray[i].valueOfVat;
         }
@@ -85,8 +86,28 @@ app.controller("rowController", function ($scope) {
         return $scope.totalValue;
     }
 
-})
+    $scope.calculateForValueOfVatChange = function (valueOfVat, index) {
+        if (valueOfVat == '') {
+            valueOfVat = 0;
+        }
+        $scope.inputsArray[index].valueOfVat = valueOfVat;
+        $scope.inputsArray[index].taxFree = valueOfVat / $scope.inputsArray[index].vatRate;
+        $scope.inputsArray[index].valueWithVat = (valueOfVat / $scope.inputsArray[index].vatRate) + valueOfVat;
+        valueOfVat = 0;
+    }
 
+    $scope.calculateForValueWithVatChange = function (valueWithVat, index) {
+        if (valueWithVat == '') {
+            valueWithVat = 0;
+        }
+        $scope.inputsArray[index].valueWithVat = valueWithVat;
+        $scope.inputsArray[index].taxFree = valueWithVat / (1 + $scope.inputsArray[index].vatRate);
+        $scope.inputsArray[index].valueOfVat = valueWithVat - (valueWithVat / (1 + $scope.inputsArray[index].vatRate));
+        valueWithVat = 0;
+
+    }
+
+})
 
    
 
