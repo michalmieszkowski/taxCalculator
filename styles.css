@@ -1,85 +1,65 @@
-.head {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  color: rgb(0, 75, 100);
-  border-bottom: 2px solid rgb(0, 75, 100);
-}
-
-.table {
+#main {
+  margin-top: .8em;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   width: 100%;
 }
 
-.tableNormal { 
-  border-collapse: collapse;
-  border-top: 2px solid yellow;
-  border-bottom: 2px solid yellow;
-  width: 100%;
+.inputHeader {
+  display: table;
   height: 70px;
+  font-size: larger;
+  padding-bottom: 12px;
 }
 
-.tableHeader {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-weight: bold;
+label {
+  display: table-row;
+}
+
+input {
+  display: table-cell;
+}
+
+table {
   border-collapse: collapse;
   width: 100%;
-  height: 80px;
 }
 
-tr:nth-child(even) {
-    background-color: #f2f2f2;
+.thead {
+  border-top: solid rgb(44, 93, 185);
+  border-bottom: solid rgb(228, 228, 18);
+  height: 60px;
 }
 
-.addNewRow {
-    border-radius: 3px;
-    background-color: #008CBA;
-    border: none;
+.tbody {
+  height: 40px;
+}
+
+.tfoot {
+  border-bottom: solid rgb(44, 93, 185);
+  border-top: solid rgb(228, 228, 18);
+  height: 60px;
+
+}
+
+.saveButton {
     text-align: center;
     text-decoration: none;
     font-size: 16px;
-    font-weight: bold;
+    background: rgb(44, 93, 185) ;
     color: white;  
     height: 30px;
-    width: 30px;
+    width: 100px; 
+    margin-top: 20px;
 }
 
-.addNewRow:hover {
-    border-radius: 3px;
-    background-color: rgb(0, 75, 100);
-    border: none;
+.rowButton {
     text-align: center;
     text-decoration: none;
     font-size: 16px;
-    font-weight: bold;
-    color: white;
-    height: 30px;
-    width: 30px;
-}
-
-.deleteRow {
-    border-radius: 3px;
-    background-color: rgb(255, 0, 0);
-    border: none;
-    text-align: center;
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: bold;
+    background: rgb(44, 93, 185) ;
     color: white;  
     height: 30px;
     width: 30px; 
 }
-
-.deleteRow:hover {
-    border-radius: 3px;
-    background-color: rgb(124, 0, 0);
-    border: none;
-    text-align: center;
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: bold;
-    color: white; 
-    height: 30px;
-    width: 30px;
-}
-
-
 

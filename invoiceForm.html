@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html ng-app="master">
+    <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+    <script src="invoiceForm.js"></script>
+    <link rel="stylesheet" href="styles.css">   
+    </head>
+    <body  ng-controller="inputController" id="main">
+        <div class="inputHeader">
+        <p>
+            <label for="invoiceNumber">Numer faktury: </label>
+            <input type="number" id="invoiceNumber" ng-model="doc.invoiceNumber" placeholder="Numer faktury...">
+        </p>
+        <p>
+            <label for="companyName">Nazwa firmy: </label>
+            <input type="text" id="companyName" ng-model="doc.companyName" placeholder="Nazwa firmy...">
+        </p>
+        </div>
+        <table> 
+                <thead >
+                    <tr class="thead">
+                        <td>#</td>
+                        <td><button class="rowButton" ng-click="addNewRow()">+</button></td>
+                        <td>Wartość netto</td>
+                        <td>Stawka VAT</td>
+                        <td>Wartość VAT</td>
+                        <td>Wartość brutto</td>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    <tr class="tbody" ng-repeat="row in doc.row">
+                        <td>{{$index + 1}}</td>
+                        <td><button class="rowButton" ng-click="removeRow($index)">-</button></td>
+                        <td><input type="number" ng-model="doc.row[$index].cleanValue" ng-init="doc.row[$index].cleanValue=0" 
+                                ng-focus="doc.row[$index].cleanValue=''"
+                                ng-blur="calculateForCleanValue(doc.row[$index].cleanValue, $index)"
+                                ng-change="calculateForCleanValue(doc.row[$index].cleanValue, $index); finalCleanValueSum(); finalTaxValueSum(); finalValueSum()"></td>
+                        <td>
+                            <select ng-options="x for x in vat" ng-init="tempVat=vat[0]; doc.row[$index].taxRate = 0.23" ng-model="tempVat"
+                                ng-change="taxChange(tempVat, $index); finalTaxValueSum(); finalValueSum()"></select>
+                        </td>
+                        <td><input type="number" ng-model="doc.row[$index].taxValue" ng-init="doc.row[$index].taxValue=0" 
+                                ng-focus="doc.row[$index].taxValue=''"
+                                ng-blur="calculateForTaxValue(doc.row[$index].taxValue, $index)"
+                                ng-change="calculateForTaxValue(doc.row[$index].taxValue, $index); finalCleanValueSum(); finalTaxValueSum(); finalValueSum()"></td>
+                        <td><input type="number" ng-model="doc.row[$index].totalValue" ng-init="doc.row[$index].totalValue=0"
+                                ng-focus="doc.row[$index].totalValue=''" 
+                                ng-blur="calculateForTotalValue(doc.row[$index].totalValue, $index)"
+                                ng-change="calculateForTotalValue(doc.row[$index].totalValue, $index); finalCleanValueSum(); finalTaxValueSum(); finalValueSum()"></td>
+                    </tr>                
+                </tbody>
+                <tfoot>
+                    <tr class="tfoot">
+                        <td></td>
+                        <td></td>
+                        <td>{{ finalCleanValue | number: 2 }} PLN</td>
+                        <td></td>
+                        <td ng-init="totalTaxValue=0">{{ finalTaxValue | number: 2 }} PLN</td>
+                        <td ng-init="totalValue=0">{{ finalValue | number: 2 }} PLN</td>
+                    </tr>
+                </tfoot>
+                
+        </table>
+        <div><button class="saveButton"  ng-click="save()">Zapisz</button></div>
+        
+
+
+
+
+
+    </body>
+
+
+</html>
