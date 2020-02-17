@@ -1,6 +1,6 @@
 var app = angular.module('master', []);
 
-app.directive('row', function () {
+app.directive('inputForm', function () {
 
     return {
         controller: 'inputController',
@@ -21,7 +21,7 @@ app.directive('row', function () {
         $rootScope.doc = {
             invoiceNumber: '',
             companyName: '',
-            row: [{
+            rows: [{
                 cleanValue: '',
                 taxRate: '',
                 taxValue: '',
@@ -31,31 +31,31 @@ app.directive('row', function () {
 
         $scope.taxChange = function (x, index) {
             if (x == '7%') {
-                $rootScope.doc.row[index].taxRate = 0.07;
+                $rootScope.doc.rows[index].taxRate = 0.07;
             } else if (x == '0%') {
-                $rootScope.doc.row[index].taxRate = 0;
+                $rootScope.doc.rows[index].taxRate = 0;
             } else {
-                $rootScope.doc.row[index].taxRate = 0.23;
+                $rootScope.doc.rows[index].taxRate = 0.23;
             }
 
-            $scope.calculateForTaxRate($rootScope.doc.row[index].taxRate, index)
+            $scope.calculateForTaxRate($rootScope.doc.rows[index].taxRate, index)
         }
 
 
         $scope.addNewRow = function () {
            
             
-            $rootScope.doc.row.push({
-                'cleanValue': $rootScope.doc.row.cleanValue,
-                'taxRate':    $rootScope.doc.row.taxRate,
-                'taxValue':   $rootScope.doc.row.taxValue,
-                'totalValue': $rootScope.doc.row.totalValue
+            $rootScope.doc.rows.push({
+                'cleanValue': $rootScope.doc.rows.cleanValue,
+                'taxRate':    $rootScope.doc.rows.taxRate,
+                'taxValue':   $rootScope.doc.rows.taxValue,
+                'totalValue': $rootScope.doc.rows.totalValue
             })
             
         };
 
         $scope.removeRow = function (index) {
-            $rootScope.doc.row.splice(index, 1);
+            $rootScope.doc.rows.splice(index, 1);
             $scope.finalCleanValueSum();
             $scope.finalTaxValueSum();
             $scope.finalValueSum();
@@ -69,54 +69,54 @@ app.directive('row', function () {
 
         $scope.calculateForCleanValue = function (cleanValue, index) {
             if (cleanValue == '') {
-               $rootScope.doc.row[index].cleanValue = 0;
+               $rootScope.doc.rows[index].cleanValue = 0;
             }
-            $rootScope.doc.row[index].taxValue = cleanValue * $rootScope.doc.row[index].taxRate;
-            $rootScope.doc.row[index].totalValue = (cleanValue * $rootScope.doc.row[index].taxRate) + cleanValue;
+            $rootScope.doc.rows[index].taxValue = cleanValue * $rootScope.doc.rows[index].taxRate;
+            $rootScope.doc.rows[index].totalValue = (cleanValue * $rootScope.doc.rows[index].taxRate) + cleanValue;
         };
 
         $scope.calculateForTaxRate = function (taxRate, index) {
-            $rootScope.doc.row[index].taxValue = $rootScope.doc.row[index].cleanValue * taxRate;
-            $rootScope.doc.row[index].totalValue = ($rootScope.doc.row[index].cleanValue * taxRate) + $rootScope.doc.row[index].cleanValue;
+            $rootScope.doc.rows[index].taxValue = $rootScope.doc.rows[index].cleanValue * taxRate;
+            $rootScope.doc.rows[index].totalValue = ($rootScope.doc.rows[index].cleanValue * taxRate) + $rootScope.doc.rows[index].cleanValue;
         };
 
         $scope.calculateForTaxValue = function (taxValue, index) {
             if (taxValue == '') {
-                $rootScope.doc.row[index].taxValue = 0;
+                $rootScope.doc.rows[index].taxValue = 0;
             }
-            $rootScope.doc.row[index].cleanValue = taxValue / $rootScope.doc.row[index].taxRate;
-            $rootScope.doc.row[index].totalValue = (taxValue / $rootScope.doc.row[index].taxRate) + taxValue;
+            $rootScope.doc.rows[index].cleanValue = taxValue / $rootScope.doc.rows[index].taxRate;
+            $rootScope.doc.rows[index].totalValue = (taxValue / $rootScope.doc.rows[index].taxRate) + taxValue;
         };
 
         $scope.calculateForTotalValue = function (totalValue, index) {
             if (totalValue == '') {
-                $rootScope.doc.row[index].totalValue = 0;
+                $rootScope.doc.rows[index].totalValue = 0;
             }
-            $rootScope.doc.row[index].cleanValue = totalValue / (1 + $rootScope.doc.row[index].taxRate);
-            $rootScope.doc.row[index].taxValue = totalValue - (totalValue / (1 + $rootScope.doc.row[index].taxRate));
+            $rootScope.doc.rows[index].cleanValue = totalValue / (1 + $rootScope.doc.rows[index].taxRate);
+            $rootScope.doc.rows[index].taxValue = totalValue - (totalValue / (1 + $rootScope.doc.rows[index].taxRate));
         };
 
         $scope.finalCleanValueSum = function () {
             $scope.finalCleanValue = 0;
-            for (var i = 0; i < $rootScope.doc.row.length; i++) {
+            for (var i = 0; i < $rootScope.doc.rows.length; i++) {
                
-                $scope.finalCleanValue = $scope.finalCleanValue + $rootScope.doc.row[i].cleanValue;
+                $scope.finalCleanValue = $scope.finalCleanValue + $rootScope.doc.rows[i].cleanValue;
             }
             return $scope.finalCleanValue;
         }
 
         $scope.finalTaxValueSum = function () {
             $scope.finalTaxValue = 0;
-            for (var i = 0; i < $rootScope.doc.row.length; i++) {
-                $scope.finalTaxValue = $scope.finalTaxValue + $rootScope.doc.row[i].taxValue;
+            for (var i = 0; i < $rootScope.doc.rows.length; i++) {
+                $scope.finalTaxValue = $scope.finalTaxValue + $rootScope.doc.rows[i].taxValue;
             }
             return $scope.finalTaxValue;
         }
 
         $scope.finalValueSum = function () {
             $scope.finalValue = 0;
-            for (var i = 0; i < $rootScope.doc.row.length; i++) {
-                $scope.finalValue = $scope.finalValue + $rootScope.doc.row[i].totalValue;
+            for (var i = 0; i < $rootScope.doc.rows.length; i++) {
+                $scope.finalValue = $scope.finalValue + $rootScope.doc.rows[i].totalValue;
             }
             return $scope.finalValue;  
         }

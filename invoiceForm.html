@@ -29,25 +29,25 @@
                 </thead>
                 
                 <tbody>
-                    <tr class="tbody" ng-repeat="row in doc.row">
+                    <tr class="tbody" ng-repeat="row in doc.rows">
                         <td>{{$index + 1}}</td>
                         <td><button class="rowButton" ng-click="removeRow($index)">-</button></td>
-                        <td><input type="number" ng-model="doc.row[$index].cleanValue" ng-init="doc.row[$index].cleanValue=0" 
-                                ng-focus="doc.row[$index].cleanValue=''"
-                                ng-blur="calculateForCleanValue(doc.row[$index].cleanValue, $index)"
-                                ng-change="calculateForCleanValue(doc.row[$index].cleanValue, $index); finalCleanValueSum(); finalTaxValueSum(); finalValueSum()"></td>
+                        <td><input type="number" ng-model="doc.rows[$index].cleanValue" ng-init="doc.rows[$index].cleanValue=0" 
+                                ng-focus="doc.rows[$index].cleanValue=''"
+                                ng-blur="calculateForCleanValue(doc.rows[$index].cleanValue, $index)"
+                                ng-change="calculateForCleanValue(doc.rows[$index].cleanValue, $index); finalCleanValueSum(); finalTaxValueSum(); finalValueSum()"></td>
                         <td>
-                            <select ng-options="x for x in vat" ng-init="tempVat=vat[0]; doc.row[$index].taxRate = 0.23" ng-model="tempVat"
+                            <select ng-options="x for x in vat" ng-init="tempVat=vat[0]; doc.rows[$index].taxRate = 0.23" ng-model="tempVat"
                                 ng-change="taxChange(tempVat, $index); finalTaxValueSum(); finalValueSum()"></select>
                         </td>
-                        <td><input type="number" ng-model="doc.row[$index].taxValue" ng-init="doc.row[$index].taxValue=0" 
-                                ng-focus="doc.row[$index].taxValue=''"
-                                ng-blur="calculateForTaxValue(doc.row[$index].taxValue, $index)"
-                                ng-change="calculateForTaxValue(doc.row[$index].taxValue, $index); finalCleanValueSum(); finalTaxValueSum(); finalValueSum()"></td>
-                        <td><input type="number" ng-model="doc.row[$index].totalValue" ng-init="doc.row[$index].totalValue=0"
-                                ng-focus="doc.row[$index].totalValue=''" 
-                                ng-blur="calculateForTotalValue(doc.row[$index].totalValue, $index)"
-                                ng-change="calculateForTotalValue(doc.row[$index].totalValue, $index); finalCleanValueSum(); finalTaxValueSum(); finalValueSum()"></td>
+                        <td><input type="number" ng-model="doc.rows[$index].taxValue" ng-init="doc.rows[$index].taxValue=0" 
+                                ng-focus="doc.rows[$index].taxValue=''"
+                                ng-blur="calculateForTaxValue(doc.rows[$index].taxValue, $index)"
+                                ng-change="calculateForTaxValue(doc.rows[$index].taxValue, $index); finalCleanValueSum(); finalTaxValueSum(); finalValueSum()"></td>
+                        <td><input type="number" ng-model="doc.rows[$index].totalValue" ng-init="doc.rows[$index].totalValue=0"
+                                ng-focus="doc.rows[$index].totalValue=''" 
+                                ng-blur="calculateForTotalValue(doc.rows[$index].totalValue, $index)"
+                                ng-change="calculateForTotalValue(doc.rows[$index].totalValue, $index); finalCleanValueSum(); finalTaxValueSum(); finalValueSum()"></td>
                     </tr>                
                 </tbody>
                 <tfoot>
